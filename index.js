@@ -2,18 +2,20 @@
 import express from "express"
 import { getDB, initDB } from "./db.js";
 import bodyParser from "body-parser";
+import path from "path"
 
 // Initialer l'application
 const app = express()
 app.use(bodyParser.json());
+app.use(express.static('public'))
 
 await initDB();
 
 app.get("/", (req, res) => {
-    res.send("Ma réponse 😢");
+    res.sendFile(path.join(process.cwd(), "/views/index.html"))
 })
 
-app.post("/user", async (req, res) => {
+app.post("/new-user", async (req, res) => {
     const body = req.body;
     console.log('body ======>', body);
 
@@ -29,7 +31,7 @@ app.post("/user", async (req, res) => {
 
     const user = await db.get("SELECT * FROM users WHERE id = (SELECT last_insert_rowid())");
 
-    res.json(user);
+    res.status(201).json(user);
 })
 
 app.get("/users", async (req, res) => {
