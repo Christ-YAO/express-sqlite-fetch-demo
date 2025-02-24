@@ -1,5 +1,7 @@
+const BASE_URL = "http://localhost:3000"
+
 async function displayUsers() {
-    const response = await fetch('/users');
+    const response = await fetch(`${BASE_URL}/users`);
     const users = await response.json();
     const ulElement = document.getElementById("users");
 
@@ -13,7 +15,7 @@ async function displayUsers() {
 };
 
 async function addUserName(name) {
-    const response = await fetch('/new-user', {
+    const response = await fetch(`${BASE_URL}/new-user`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
