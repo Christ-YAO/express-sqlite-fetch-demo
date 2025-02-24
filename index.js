@@ -3,11 +3,13 @@ import express from "express"
 import { getDB, initDB } from "./db.js";
 import bodyParser from "body-parser";
 import path from "path"
+import cors from "cors"
 
 // Initialer l'application
 const app = express()
 app.use(bodyParser.json());
 app.use(express.static('public'))
+app.use(cors())
 
 await initDB();
 
